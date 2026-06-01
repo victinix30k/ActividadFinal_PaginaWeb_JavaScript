@@ -1,0 +1,50 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #111;
+    color: #fff;
+    margin: 0;
+    padding: 20px;
+}
+
+.foro-container {
+    max-width: 700px;
+    margin: auto;
+    background-color: #222;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+}
+
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+header h1 {
+    color: #ffcc00;
+}
+
+.mensaje {
+    display: flex;
+    gap: 15px;
+    background-color: #333;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.mensaje .avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.mensaje .contenido h4 {
+    margin: 0 0 5px 0;
+    color: #0b84ff;
+}
+
+.mensaje .contenido p {
+    margin: 0;
+}

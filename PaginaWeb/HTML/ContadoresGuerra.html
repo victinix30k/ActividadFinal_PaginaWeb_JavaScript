@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contadores de Guerra – Helldivers</title>
+    <link rel="stylesheet" href="../Css/ContadoresGuerra.css">
+</head>
+
+<body>
+    <div class="container">
+        <header class="war-header">
+            <p class="eyebrow">Centro de mando — SuperTierra™</p>
+            <h1>Contadores de Guerra en Vivo</h1>
+            <p class="subtitle">Estadísticas actualizadas en tiempo real</p>
+        </header>
+
+        <div class="counters-grid">
+            <!-- Contador 1: Helldivers Caídos -->
+            <div class="counter-card card-fallen">
+                <img class="card-icon" src="../Imagenes/Caidos.png" alt="Helldiver caído">
+                <h2 class="counter-label">Helldivers Caídos</h2>
+                <div class="counter-value" id="counter-fallen">0</div>
+                <div class="counter-delta" id="delta-fallen"></div>
+            </div>
+
+            <!-- Contador 2: Nuevos Alistados -->
+            <div class="counter-card card-enlisted">
+                <img class="card-icon" src="../Imagenes/alistado.png" alt="Nuevo alistado">
+                <h2 class="counter-label">Nuevos Alistados</h2>
+                <div class="counter-value" id="counter-enlisted">0</div>
+                <div class="counter-delta" id="delta-enlisted"></div>
+            </div>
+
+            <!-- Contador 3: Bichos -->
+            <div class="counter-card card-bugs">
+                <img class="card-icon" src="../Imagenes/Terminidos.png" alt="Bajas bichos">
+                <h2 class="counter-label">Bajas: Bichos</h2>
+                <div class="counter-value" id="counter-bugs">0</div>
+                <div class="counter-delta" id="delta-bugs"></div>
+            </div>
+
+            <!-- Contador 4: Calamares -->
+            <div class="counter-card card-squids">
+                <img class="card-icon" src="../Imagenes/Iluminados.png" alt="Bajas calamares">
+                <h2 class="counter-label">Bajas: Calamares</h2>
+                <div class="counter-value" id="counter-squids">0</div>
+                <div class="counter-delta" id="delta-squids"></div>
+            </div>
+
+            <!-- Contador 5: Autómatas -->
+            <div class="counter-card card-automatons">
+                <img class="card-icon" src="../Imagenes/Automatones.png" alt="Bajas autómatas">
+                <h2 class="counter-label">Bajas: Autómatas</h2>
+                <div class="counter-value" id="counter-automatons">0</div>
+                <div class="counter-delta" id="delta-automatons"></div>
+            </div>
+        </div>
+
+        <div class="total-bar">
+            <p class="total-label">Total de enemigos abatidos</p>
+            <div class="total-value" id="total-enemies">0</div>
+        </div>
+    </div>
+
+    <footer>SuperTierra™ · Todos mueren por la democracia</footer>
+    <script src="../JavaScript/ContadoresGuerra.js"></script>
+</body>
+
+</html>

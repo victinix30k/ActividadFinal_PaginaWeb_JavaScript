@@ -1,0 +1,469 @@
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informe de Guerra – Helldivers</title>
+    <style>
+    
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --gold: #FFD700;
+            --gold-dim: #7a6800;
+            --red: #cc2200;
+            --green: #2dcc60;
+            --bg: #050608;
+            --panel: #0c0e14;
+            --border: rgba(255,215,0,0.15);
+            --text: #e8ddb0;
+            --muted: #5a5035;
+        }
+
+        body {
+            background-color: var(--bg);
+            font-family: 'Rajdhani', sans-serif;
+            color: var(--text);
+            min-height: 100vh;
+            padding: 28px 16px 48px;
+            background-image:
+                radial-gradient(ellipse 80% 40% at 50% -5%, rgba(255,215,0,0.05) 0%, transparent 70%),
+                repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(255,215,0,0.025) 40px),
+                repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(255,215,0,0.025) 40px);
+        }
+
+        header { text-align: center; margin-bottom: 32px; }
+
+        .eyebrow {
+            font-size: 11px;
+            letter-spacing: 0.35em;
+            color: var(--gold-dim);
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        header h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2.2rem, 6vw, 3.8rem);
+            color: var(--gold);
+            letter-spacing: 0.08em;
+            line-height: 1;
+            text-shadow: 0 0 40px rgba(255,215,0,0.25);
+        }
+
+        .subtitle {
+            margin-top: 6px;
+            font-size: 13px;
+            color: var(--muted);
+            letter-spacing: 0.1em;
+        }
+
+        .war-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            background: rgba(204,34,0,0.12);
+            border: 1px solid rgba(204,34,0,0.4);
+            border-radius: 3px;
+            padding: 4px 14px;
+            font-size: 11px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: #ff6644;
+            margin-bottom: 28px;
+        }
+
+        .dot-live {
+            width: 7px; height: 7px;
+            border-radius: 50%;
+            background: #ff3300;
+            animation: blink 1s step-start infinite;
+        }
+
+        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+        .helldiver-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            max-width: 700px;
+            margin: 0 auto 32px;
+        }
+
+        .hd-card {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 20px 24px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hd-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+        }
+
+        .hd-card.fallen::before  { background: var(--red); box-shadow: 0 0 12px var(--red); }
+        .hd-card.enlisted::before { background: var(--green); box-shadow: 0 0 12px var(--green); }
+
+        .card-label {
+            font-size: 11px;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .hd-card.fallen .card-label  { color: #cc5533; }
+        .hd-card.enlisted .card-label { color: #2dcc60; }
+
+        .card-icon { font-size: 28px; margin-bottom: 6px; line-height: 1; }
+
+        .hd-big-num {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2.4rem, 6vw, 3.4rem);
+            letter-spacing: 0.04em;
+            line-height: 1;
+        }
+
+        .hd-card.fallen .hd-big-num  { color: #ff4422; text-shadow: 0 0 20px rgba(204,34,0,0.5); }
+        .hd-card.enlisted .hd-big-num { color: var(--green); text-shadow: 0 0 20px rgba(45,204,96,0.4); }
+
+        .delta {
+            font-size: 12px;
+            margin-top: 6px;
+            letter-spacing: 0.08em;
+            height: 16px;
+        }
+
+        .hd-card.fallen .delta  { color: #cc5533; }
+        .hd-card.enlisted .delta { color: #2dcc60; }
+
+        .section-title {
+            max-width: 1000px;
+            margin: 0 auto 14px;
+            font-size: 11px;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--muted);
+            padding-left: 4px;
+        }
+
+        .factions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+            gap: 18px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .faction-card {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .faction-header {
+            padding: 14px 18px 12px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .faction-icon {
+            width: 40px; height: 40px;
+            border-radius: 4px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 20px; flex-shrink: 0;
+        }
+
+        .faction-icon.terminidos { background: rgba(120,50,0,0.4); border: 1px solid rgba(180,80,0,0.4); }
+        .faction-icon.automaton  { background: rgba(200,30,30,0.15); border: 1px solid rgba(200,60,60,0.35); }
+        .faction-icon.iluminados { background: rgba(0,80,200,0.15); border: 1px solid rgba(30,120,255,0.35); }
+
+        .faction-meta h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.25rem;
+            letter-spacing: 0.08em;
+            color: var(--gold);
+            line-height: 1;
+        }
+
+        .faction-meta span {
+            font-size: 11px;
+            color: var(--muted);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .faction-total-wrap { margin-left: auto; text-align: right; }
+
+        .faction-total {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.9rem;
+            color: var(--gold);
+            letter-spacing: 0.05em;
+            line-height: 1;
+        }
+
+        .faction-total-label {
+            font-size: 10px;
+            color: var(--muted);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+                .faction-body { padding: 12px 18px 16px; }
+
+        .enemy-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,215,0,0.05);
+        }
+
+        .enemy-row:last-child { border-bottom: none; }
+
+        .enemy-name {
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+            color: var(--text);
+            flex: 1;
+        }
+
+        .enemy-count {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.35rem;
+            color: var(--gold);
+            min-width: 80px;
+            text-align: right;
+            letter-spacing: 0.04em;
+            line-height: 1;
+            transition: color 0.08s;
+        }
+
+        .enemy-count.flash { color: #fff; }
+
+        .grand-bar {
+            max-width: 1000px;
+            margin: 24px auto 0;
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .g-label {
+            font-size: 11px;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        .grand-num {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.2rem;
+            color: var(--gold);
+            letter-spacing: 0.06em;
+            line-height: 1;
+            text-shadow: 0 0 20px rgba(255,215,0,0.3);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 10px;
+            letter-spacing: 0.15em;
+            color: var(--muted);
+            text-transform: uppercase;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.05) 2px, rgba(0,0,0,0.05) 4px);
+            pointer-events: none;
+            z-index: 999;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <p class="eyebrow">Centro de mando — SuperTierra™</p>
+    <h1>Informe de Guerra en Vivo</h1>
+    <p class="subtitle">Datos actualizados en tiempo real desde el frente de combate</p>
+</header>
+
+<div style="text-align:center">
+    <div class="war-badge">
+        <div class="dot-live"></div>
+        Guerra en curso
+    </div>
+</div>
+
+<div class="helldiver-stats">
+    <div class="hd-card fallen">
+        <div class="card-label">Helldivers Caídos</div>
+        <div class="card-icon">💀</div>
+        <div class="hd-big-num" id="hd-fallen">0</div>
+        <div class="delta" id="fallen-delta"></div>
+    </div>
+    <div class="hd-card enlisted">
+        <div class="card-label">Nuevos Alistados</div>
+        <div class="card-icon">🪖</div>
+        <div class="hd-big-num" id="hd-enlisted">0</div>
+        <div class="delta" id="enlisted-delta"></div>
+    </div>
+</div>
+
+<p class="section-title">Bajas enemigas por facción</p>
+<div class="factions" id="factions-container"></div>
+
+<div class="grand-bar">
+    <div class="g-label">Total de bajas enemigas confirmadas</div>
+    <div class="grand-num" id="grand-total">0</div>
+</div>
+
+<footer>SuperTierra™ · Todos mueren por la democracia</footer>
+
+<script>
+const FACTIONS = [
+    {
+        id: 'terminidos', nombre: 'Terminidos', alias: 'Los Bichos',
+        icon: '🐛', clase: 'terminidos',
+        enemigos: ['Scavenger','Warrior','Hunter','Stalker','Charger','Bile Spewer','Brood Commander','Bile Titan'],
+        rates: [80,40,30,8,5,12,6,1]
+    },
+    {
+        id: 'automaton', nombre: 'Automaton', alias: 'Colectivo de Cyberstan',
+        icon: '🤖', clase: 'automaton',
+        enemigos: ['Trooper','Commissar','Berserker','Devastator','Scout Strider','Hulk','Tank','Factory Strider'],
+        rates: [60,15,25,20,10,4,3,1]
+    },
+    {
+        id: 'iluminados', nombre: 'Iluminados', alias: 'Los Calamares',
+        icon: '🦑', clase: 'iluminados',
+        enemigos: ['Voteless','Watcher','Overseer','Harvester','Shield Overseer','Illuminate Tripod','Squid Patrol','Elder'],
+        rates: [70,20,12,5,8,3,15,1]
+    }
+];
+
+// Estado solo en memoria — se reinicia al recargar
+const state = {
+    fallen:   Math.floor(Math.random() * 900000) + 100000,
+    enlisted: 0,
+    enemies:  {}
+};
+
+state.enlisted = Math.floor(state.fallen * 0.6 + Math.random() * 50000);
+
+FACTIONS.forEach(f => {
+    state.enemies[f.id] = {};
+    f.enemigos.forEach((e, i) => {
+        state.enemies[f.id][e] = Math.floor(f.rates[i] * (Math.random() * 80000 + 20000));
+    });
+});
+
+function fmt(n) { return Math.floor(n).toLocaleString('es-ES'); }
+
+function getFactionTotal(fid) {
+    return Object.values(state.enemies[fid]).reduce((a, b) => a + b, 0);
+}
+
+function getGrandTotal() {
+    return FACTIONS.reduce((s, f) => s + getFactionTotal(f.id), 0);
+}
+
+function buildUI() {
+    const container = document.getElementById('factions-container');
+    FACTIONS.forEach(f => {
+        const card = document.createElement('div');
+        card.className = 'faction-card';
+        let rows = '';
+        f.enemigos.forEach(e => {
+            const id = (f.id + '__' + e).replace(/\s+/g, '_');
+            rows += `<div class="enemy-row">
+                <span class="enemy-name">${e}</span>
+                <span class="enemy-count" id="ec-${id}">${fmt(state.enemies[f.id][e])}</span>
+            </div>`;
+        });
+        card.innerHTML = `
+            <div class="faction-header">
+                <div class="faction-icon ${f.clase}">${f.icon}</div>
+                <div class="faction-meta"><h2>${f.nombre}</h2><span>${f.alias}</span></div>
+                <div class="faction-total-wrap">
+                    <div class="faction-total" id="ft-${f.id}">${fmt(getFactionTotal(f.id))}</div>
+                    <div class="faction-total-label">bajas</div>
+                </div>
+            </div>
+            <div class="faction-body">${rows}</div>`;
+        container.appendChild(card);
+    });
+    document.getElementById('grand-total').textContent  = fmt(getGrandTotal());
+    document.getElementById('hd-fallen').textContent    = fmt(state.fallen);
+    document.getElementById('hd-enlisted').textContent  = fmt(state.enlisted);
+}
+
+function tick() {
+    const fallenDelta   = Math.random() < 0.55 ? Math.floor(Math.random() * 9) : 0;
+    const enlistedDelta = Math.random() < 0.4  ? Math.floor(Math.random() * 5) : 0;
+
+    state.fallen   += fallenDelta;
+    state.enlisted += enlistedDelta;
+
+    document.getElementById('hd-fallen').textContent   = fmt(state.fallen);
+    document.getElementById('hd-enlisted').textContent = fmt(state.enlisted);
+
+    if (fallenDelta > 0)
+        document.getElementById('fallen-delta').textContent  = '+' + fallenDelta + ' esta ronda';
+    if (enlistedDelta > 0)
+        document.getElementById('enlisted-delta').textContent = '+' + enlistedDelta + ' alistados';
+
+    FACTIONS.forEach(f => {
+        let fChanged = false;
+        f.enemigos.forEach((e, i) => {
+            const rate = f.rates[i];
+            if (Math.random() < 0.3 + (rate / 120)) {
+                const delta = Math.floor(Math.random() * Math.max(1, rate * 0.4 + 1));
+                if (delta > 0) {
+                    state.enemies[f.id][e] += delta;
+                    fChanged = true;
+                    const id = (f.id + '__' + e).replace(/\s+/g, '_');
+                    const el = document.getElementById('ec-' + id);
+                    if (el) {
+                        el.textContent = fmt(state.enemies[f.id][e]);
+                        el.classList.add('flash');
+                        setTimeout(() => el.classList.remove('flash'), 90);
+                    }
+                }
+            }
+        });
+        if (fChanged) {
+            const ftEl = document.getElementById('ft-' + f.id);
+            if (ftEl) ftEl.textContent = fmt(getFactionTotal(f.id));
+        }
+    });
+
+    document.getElementById('grand-total').textContent = fmt(getGrandTotal());
+}
+
+buildUI();
+setInterval(tick, 120);
+</script>
+</body>
+</html>

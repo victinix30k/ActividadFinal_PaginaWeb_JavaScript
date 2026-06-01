@@ -1,0 +1,168 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: black;
+    color: #f2f5ff;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header */
+.war-header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 30px 20px;
+    background-color: black;
+    border: 2px solid #ffaa00;
+    border-radius: 15px;
+}
+
+.eyebrow {
+    font-weight: 700;
+    color: #00d4ff;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin: 0 0 10px;
+    font-size: 0.85rem;
+}
+
+.war-header h1 {
+    margin: 15px 0;
+    font-size: 2.5rem;
+    color: #fff;
+}
+
+.subtitle {
+    margin: 10px 0 0;
+    color: #a8deff;
+    font-size: 1.1rem;
+}
+
+/* Grid de Contadores */
+.counters-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+/* Tarjeta de Contador */
+.counter-card {
+    position: relative;
+    padding: 25px 20px;
+    border-radius: 12px;
+    background-color: #111;
+    border: 2px solid #444;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+
+.counter-card.card-fallen {
+    border-color: #ffaa00;
+}
+
+
+
+.counter-card.card-enlisted {
+    border-color: #ffaa00;
+}
+
+
+
+.counter-card.card-bugs {
+    border-color: #ffaa00;
+}
+
+
+
+.counter-card.card-squids {
+    border-color: #ffaa00;
+}
+
+
+
+.counter-card.card-automatons {
+    border-color: #ffaa00;
+}
+
+
+
+.card-icon {
+    display: block;
+    width: 72px;
+    height: 72px;
+    margin: 0 auto 15px;
+    object-fit: contain;
+    border-radius: 14px;
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 10px;
+}
+
+.counter-label {
+    margin: 0 0 15px;
+    color: #a8deff;
+    font-size: 0.95rem;
+    font-weight: bold;
+    letter-spacing: 0.05em;
+}
+
+.counter-value {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #fff;
+    margin: 15px 0;
+}
+
+.counter-delta {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: 10px;
+    min-height: 25px;
+    color: #99b3cc;
+}
+
+/* Barra de Total */
+.total-bar {
+    padding: 30px;
+    border: 3px solid #ffaa00;
+    border-radius: 15px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.total-label {
+    margin: 0 0 15px;
+    color: #ffffff;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.total-value {
+    font-size: 3.5rem;
+    font-weight: bold;
+    color: #fff;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 20px;
+    color: #99b3cc;
+    font-size: 0.9rem;
+    border-top: 1px solid #333;
+    margin-top: 30px;
+}
+
